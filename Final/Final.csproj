@@ -178,7 +178,6 @@
     <Content Include="Admin\ItemsRates.aspx" />
     <Content Include="Admin\Location.aspx" />
     <Content Include="Admin\ReportDashboard.aspx" />
-    <Content Include="Admin\Role.aspx" />
     <Content Include="Admin\VIPRequestFrom.aspx" />
     <Content Include="CanteenRequestForm.aspx" />
     <Content Include="Contact.aspx" />
@@ -411,12 +410,6 @@
     </Compile>
     <Compile Include="Admin\ReportDashboard.aspx.designer.cs">
       <DependentUpon>ReportDashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\Role.aspx.cs">
-      <DependentUpon>Role.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\Role.aspx.designer.cs">
-      <DependentUpon>Role.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\VIPRequestFrom.aspx.cs">
       <DependentUpon>VIPRequestFrom.aspx</DependentUpon>

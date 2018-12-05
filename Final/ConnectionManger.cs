@@ -15,6 +15,9 @@ namespace Final
         public string ManagerEmail { get; set; }
         public string EmpPassword { get; set; }
 
+
+
+
         internal bool ConnMan(string str)
         {
 
@@ -45,9 +48,6 @@ namespace Final
                 return isSuccess;
             }
         }
-        
-
-
         internal void ForManagerEmail(string str)
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
@@ -87,6 +87,30 @@ namespace Final
                 }
             }
         }
+
+        internal DataSet Fill(string QueryForAutoFilling)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(ConnectionString);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = QueryForAutoFilling;
+                DataSet objDs = new DataSet();
+                SqlDataAdapter dAdapter = new SqlDataAdapter();
+                dAdapter.SelectCommand = cmd;
+                con.Open();
+                dAdapter.Fill(objDs);
+                con.Close();
+                return objDs;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
     
 }

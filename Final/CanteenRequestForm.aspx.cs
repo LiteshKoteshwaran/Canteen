@@ -17,17 +17,16 @@ namespace Final
 {
     public partial class CanteenRequestForm : System.Web.UI.Page
     {
-        static string RequestID, TokenID;
         ConnectionManger connectionManger;
+        ForSqlOp forSqlOp;
         string ManagerEmail { set; get; }
-        //string Password { set; get; }
         string EmpPassword { set; get; }
         public static string ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         SqlConnection con = new SqlConnection(ConnectionString);
         static string AlertSuccesMessage = "Request has been made";
         static string AlertFailureMessage = "Try again some other time!!!";
-        int CountOfGuest = 1;
-        static string link= "http://localhost:63020/Admin/VIPRequestFrom"; 
+        static string link= " http://localhost:63020/Admin/VIPRequestFrom ";
+        string RequestID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,9 +36,9 @@ namespace Final
                 AutoFillLoc();
                 AutoFillEmpName();
                 txtEmpLoyee.Text = Context.User.Identity.GetUserName();
-                DataTable dt = new DataTable();
-                dt.Columns.AddRange(new DataColumn[4] { new DataColumn("S.No"), new DataColumn("GuestName"), new DataColumn("Name"), new DataColumn("MobileNo") });
-                ViewState["Guest"] = dt;
+                //DataTable dt = new DataTable();
+                //dt.Columns.AddRange(new DataColumn[4] { new DataColumn("S.No"), new DataColumn("GuestName"), new DataColumn("Name"), new DataColumn("MobileNo") });
+                //ViewState["Guest"] = dt;
                 this.BindGrid();
             }
             if (Context.User.IsInRole("HR"))
@@ -55,27 +54,29 @@ namespace Final
             }
             if(Session["Result"]== "Accepted")
                 Response.Write("<script>alert('" + "Admin Has Accepted your request" + "');</script>");
-            if(Session["Result"] == "Rejected")
+            if (Session["Result"] == "Rejected")
+            {
+                forSqlOp = new ForSqlOp();
+                forSqlOp.AdminIsApproved();
                 Response.Write("<script>alert('" + "Admin Has Rejected your request" + "');</script>");
+            }
         }
 
         protected void BindGrid()
         {
-            GridView1.DataSource = (DataTable)ViewState["Guest"];
-            GridView1.DataBind();
         }
 
-        void Insert()
-        {
-            DataTable dt = (DataTable)ViewState["Guest"];
-            dt.Rows.Add(CountOfGuest, txtGuestName.Text.Trim(), txtOrgName.Text.Trim(), txtMobileNo.Text.Trim());
-            ViewState["Guest"] = dt;
-            this.BindGrid();int i = 1;
-            lblCount.Text = (CountOfGuest+i++).ToString();
-            txtGuestName.Text = string.Empty;
-            txtOrgName.Text = string.Empty;
-            txtMobileNo.Text = string.Empty;
-        }
+        //void Insert()
+        //{
+        //    DataTable dt = (DataTable)ViewState["Guest"];
+        //    dt.Rows.Add(CountOfGuest, txtGuestName.Text.Trim(), txtOrgName.Text.Trim(), txtMobileNo.Text.Trim());
+        //    ViewState["Guest"] = dt;
+        //    this.BindGrid();int i = 1;
+        //    lblCount.Text = (CountOfGuest+i++).ToString();
+        //    txtGuestName.Text = string.Empty;
+        //    txtOrgName.Text = string.Empty;
+        //    txtMobileNo.Text = string.Empty;
+        //}
         protected void btnRequest_Click(object sender, EventArgs e)
         {
             string SubjectForVipRequest = "Vip Food Request";
@@ -105,7 +106,7 @@ namespace Final
             catch(Exception ex)
             {
 
-                Response.Write("<script>alert('" + AlertFailureMessage + "');</script>");
+                Response.Write("<script>alert('" + (AlertFailureMessage) + "');</script>");
             }
             AssignValues();
             Session["RequestId"] = RequestID;
@@ -115,7 +116,7 @@ namespace Final
 
         void AssignValues()
         {
-            ForSqlOp forSqlOp = new ForSqlOp();
+            forSqlOp = new ForSqlOp();
             forSqlOp.GName = txtGuestName.Text;
             forSqlOp.OrgName = txtOrgName.Text;
             forSqlOp.MobileNo = txtMobileNo.Text;
@@ -133,42 +134,20 @@ namespace Final
 
             forSqlOp.AddDetails = txtAddDetails.Text;
             forSqlOp.FoodType = ddlMealType.SelectedValue;
-            RequestID = Guid.NewGuid().ToString().Substring(0, Guid.NewGuid().ToString().Length - 25);
-            TokenID = Guid.NewGuid().ToString().Substring(0, Guid.NewGuid().ToString().Length - 25);
-            forSqlOp.RequestForm(RequestID, TokenID);
-            forSqlOp.InsertionForGuest(RequestID, TokenID);
+            forSqlOp.RequestID = Guid.NewGuid().ToString().Substring(0, Guid.NewGuid().ToString().Length - 25);
+            RequestID = forSqlOp.RequestID;
+            forSqlOp.TokenID = Guid.NewGuid().ToString().Substring(0, Guid.NewGuid().ToString().Length - 25);
+            forSqlOp.RequestForm();
+            forSqlOp.InsertionForGuest();
         }
 
 
 
 
 
-        protected void btnAdd_Click(object sender, EventArgs e)
-        {
-            Insert();
-        }
-
-
-        //void ForManagerEmail()
+        //protected void btnAdd_Click(object sender, EventArgs e)
         //{
-        //    string str = "select Manager.Email, Manager.Password from Manager join Department on Department.ID = Manager.DepartmentID where DepartmentID =('" + ddlDeptID.SelectedItem + "')";
-        //    using (SqlConnection con = new SqlConnection(ConnectionString))
-        //    {
-        //        using (SqlCommand cmd = new SqlCommand(str))
-        //        {
-        //            cmd.Connection = con;
-        //            con.Open();
-        //            using (SqlDataReader sdr = cmd.ExecuteReader())
-        //            {
-        //                if (sdr.Read())
-        //                {
-        //                    Email = sdr["Email"].ToString();
-        //                    //Password = sdr["Password"].ToString();
-        //                }
-        //            }
-        //            con.Close();
-        //        }
-        //    }
+        //    Insert();
         //}
         void FetchManagerEmail()
         {
@@ -215,9 +194,9 @@ namespace Final
         }
         private void AutoFillLoc()
         {
+            connectionManger = new ConnectionManger();
             string QueryForAutoFillingLoc = "SELECT LocationID, LocationName FROM Location";
-            ForSqlOp forSqlOp = new ForSqlOp();
-            DataSet dataSet = forSqlOp.Fill(QueryForAutoFillingLoc);
+            DataSet dataSet = connectionManger.Fill(QueryForAutoFillingLoc);
             if (dataSet.Tables[0].Rows.Count > 0)
             {
                 ddlLocation.DataSource = dataSet.Tables[0];
@@ -230,9 +209,9 @@ namespace Final
 
         void AutoFillIteam()
         {
+            connectionManger = new ConnectionManger();
             string QueryForAutoFillingItem = "SELECT ItemID, ItemName FROM Item where ItemName = 'Snacks'";
-            ForSqlOp forSqlOp = new ForSqlOp();
-            DataSet dataSet = forSqlOp.Fill(QueryForAutoFillingItem);
+            DataSet dataSet = connectionManger.Fill(QueryForAutoFillingItem);
             if (dataSet.Tables[0].Rows.Count > 0)
             {
                 ddlItemName.DataSource = dataSet.Tables[0];
@@ -244,9 +223,9 @@ namespace Final
         }
         void AutoFillForDepart()
         {
+            connectionManger = new ConnectionManger();
             String QueryForAutoFillingDepartment = "select Name, Id from Department";
-            ForSqlOp forSqlOp = new ForSqlOp();
-            DataSet dataSet = forSqlOp.Fill(QueryForAutoFillingDepartment);
+            DataSet dataSet = connectionManger.Fill(QueryForAutoFillingDepartment);
             if (dataSet.Tables[0].Rows.Count > 0)
             {
                 ddlDeptID.DataSource = dataSet.Tables[0];
@@ -256,57 +235,42 @@ namespace Final
                 ddlDeptID.Items.Insert(0, "--Select--");
             }
         }
-        
+        protected void btnReqSubmit_Click(object sender, EventArgs e)
+        {
+        }
+
         protected void ddlEmpName_SelectedIndexChanged(object sender, EventArgs e)
         {
             txtEmpId.Text = ddlEmpName.SelectedValue;
         }
 
-        protected void btnReqSubmit_Click(object sender, EventArgs e)
-        {
-            //string StrQuery;
-            //try
-            //{
-            //    using (SqlConnection conn = new SqlConnection(ConnectionString))
-            //    {
-            //        using (SqlCommand comm = new SqlCommand())
-            //        {
-            //            comm.Connection = conn;
-            //            conn.Open();
-            //            for (int i = 0; i < GridView1.Rows.Count; i++)
-            //            {
-            //                StrQuery = @"INSERT INTO tableName VALUES ("
-            //                    + GridView1.Rows[i].Cells["ColumnName"].Text + ", "
-            //                    + GridView1.Rows[i].Cells["ColumnName"].Text + ");";
-            //                comm.CommandText = StrQuery;
-            //                comm.ExecuteNonQuery();
-            //            }
-            //        }
-            //    }
-            //}
-        }
-
         protected void ddlLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT CanteenID, CanteenName FROM Canteen WHERE LocationId ="+ ddlLocation.SelectedValue;
-           // cmd.Parameters.AddWithValue("@LocationID", ddlLocation.SelectedValue);
-            DataSet Ds = new DataSet();
-            SqlDataAdapter dAdapter = new SqlDataAdapter();
-            dAdapter.SelectCommand = cmd;
-            con.Open();
-            dAdapter.Fill(Ds);
-            con.Close();
-            if (Ds.Tables[0].Rows.Count > 0)
+            connectionManger = new ConnectionManger();
+            string QueryForCascading = "SELECT CanteenID, CanteenName FROM Canteen WHERE LocationId ="+ ddlLocation.SelectedValue;
+            DataSet dataSet = connectionManger.Fill(QueryForCascading);
+            if (dataSet.Tables[0].Rows.Count > 0)
             {
-                ddlCanteen.DataSource = Ds.Tables[0];
+                ddlCanteen.DataSource = dataSet.Tables[0];
                 ddlCanteen.DataTextField = "CanteenName";
                 ddlCanteen.DataValueField = "CanteenID";
                 ddlCanteen.DataBind();
                 ddlCanteen.Items.Insert(0, "--Select--");
+            }
+        }
+
+        protected void ddlCanteen_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            connectionManger = new ConnectionManger();
+            string QueryForCascading = "SELECT Item.ItemID, Item.ItemName from Item join CanteenItem on Item.ItemID = CanteenItem.ItemID join Canteen on Canteen.CanteenID = CanteenItem.CanteenID where Canteen.CanteenID="+ ddlCanteen.SelectedValue;
+            DataSet dataSet = connectionManger.Fill(QueryForCascading);
+            if (dataSet.Tables[0].Rows.Count > 0)
+            {
+                ddlMealType.DataSource = dataSet.Tables[0];
+                ddlMealType.DataTextField = "ItemName";
+                ddlMealType.DataValueField = "ItemID";
+                ddlMealType.DataBind();
+                ddlMealType.Items.Insert(0, "--Select--");
             }
         }
 
@@ -317,30 +281,6 @@ namespace Final
             if (CmpDate <= thisDay)
             {
                 args.IsValid = false;
-            }
-        }
-
-        protected void ddlCanteen_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SqlConnection con = new SqlConnection(ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT Item.ItemID, Item.ItemName from Item join CanteenItem on Item.ItemID = CanteenItem.ItemID join Canteen on Canteen.CanteenID = CanteenItem.CanteenID where Canteen.CanteenID="+114;
-            cmd.Parameters.AddWithValue("@ID", ddlCanteen.SelectedValue);
-            DataSet objDs = new DataSet();
-            SqlDataAdapter dAdapter = new SqlDataAdapter();
-            dAdapter.SelectCommand = cmd;
-            con.Open();
-            dAdapter.Fill(objDs);
-            con.Close();
-            if (objDs.Tables[0].Rows.Count > 0)
-            {
-                ddlMealType.DataSource = objDs.Tables[0];
-                ddlMealType.DataTextField = "ItemName";
-                ddlMealType.DataValueField = "ItemID";
-                ddlMealType.DataBind();
-                ddlMealType.Items.Insert(0, "--Select--");
             }
         }
 

@@ -26,38 +26,28 @@ namespace Final
         public string ToDate { get; set; }
         public string AddDetails { get; set; }
         public string Emp2 { get; set; }
+        public string AdminVIPApproval { get; set; }
+        public string RequestID { set; get; }
+        public string TokenID { set; get; }
 
         ConnectionManger connectionManger = new ConnectionManger();
-        bool Result;
+        bool Result ;
 
-        internal bool InsertionForGuest(string RequestID, string Token)
+        internal bool InsertionForGuest()
         {
-            string str = "insert into Guest values('" + GName + "','" + OrgName + "','" + MobileNo + "','" + Token + "','" + RequestID + "')" ; 
+            string str = "insert into Guest values('" + GName + "','" + OrgName + "','" + MobileNo + "','" + TokenID + "','" + RequestID + "')" ; 
             Result = connectionManger.ConnMan(str);
             return Result;
         }
-        internal void RequestForm(string RequestID, string Token)
+        internal bool RequestForm()
         {
             string str = "insert into RequestForm values('" + RequestID + "','" + EmpId  + "','" + DepartID + "','" + LocId + "','" + CanteenID + "','" + FoodType + "','" + OrderQuanty + "','" + FromDate + "','" + ToDate + "','" + AddDetails + "')";
-             
-            Result = connectionManger.ConnMan(str);
+            return Result = connectionManger.ConnMan(str);
         }
-
-
-        internal DataSet Fill(string QueryForAutoFillingLoc)
+        internal bool AdminIsApproved()
         {
-            SqlConnection con = new SqlConnection(ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = QueryForAutoFillingLoc;
-            DataSet objDs = new DataSet();
-            SqlDataAdapter dAdapter = new SqlDataAdapter();
-            dAdapter.SelectCommand = cmd;
-            con.Open();
-            dAdapter.Fill(objDs);
-            con.Close();
-            return objDs;
+            string str = "update RequestForm set AdminIsApproved = false where RequestID = '"+RequestID +"'";
+            return Result = connectionManger.ConnMan(str);
         }
     }
 }

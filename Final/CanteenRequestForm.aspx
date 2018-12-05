@@ -335,12 +335,6 @@ table
                    <br />
                    <br />
                    <br />
-                   &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="btnAdd" runat="server" Height="21px" OnClick="btnAdd_Click" Text="Add" Width="75px" />
-&nbsp;<asp:Button ID="btnRemove" runat="server" Height="20px" Text="Remove" Width="80px" />
-                   <asp:GridView ID="GridView1" runat="server" Height="60px" Width="766px">
-                   </asp:GridView>
-                   <br />
-                   <br />
                    <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                    <br />
