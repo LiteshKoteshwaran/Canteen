@@ -32,17 +32,22 @@
                 <br />
             </td>
             <td class="auto-style6">
-                <asp:DropDownList ID="ddlLocation" runat="server" OnSelectedIndexChanged="ddlLocation_SelectedIndexChanged"  >
+                <asp:DropDownList ID="ddlLocation" runat="server" AutoPostBack = "true" OnSelectedIndexChanged="ddlLocation_SelectedIndexChanged"  >
+                <asp:ListItem Text = "--Select Location--" Value = ""></asp:ListItem>
                 </asp:DropDownList>
+
                 <br />
             </td>
             <td class="auto-style7">
                 <asp:Label ID="lblCanteen" runat="server" Text="Canteen"></asp:Label>
                 <br />
             </td>
+
             <td class="auto-style8">
-                <asp:DropDownList ID="ddlCanteen" runat="server" OnSelectedIndexChanged="ddlCanteen_SelectedIndexChanged" >
+                <asp:DropDownList ID="ddlCanteen" runat="server" AutoPostBack = "true" Enabled = "true" OnSelectedIndexChanged="ddlCanteen_SelectedIndexChanged" >
+                <asp:ListItem Text = "--Select Canteen--" Value = ""></asp:ListItem>
                 </asp:DropDownList>
+
                 <br />
             </td>
         </tr>
@@ -51,7 +56,7 @@
                 <asp:Label ID="lblType" runat="server" Text="Type"></asp:Label>
             </td>
             <td class="auto-style10">
-                <asp:DropDownList ID="ddlCanteenType" runat="server" OnSelectedIndexChanged="ddlCanteenType_SelectedIndexChanged">
+                <asp:DropDownList ID="ddlCanteenType" runat="server" >
                     <asp:ListItem>VIP</asp:ListItem>
                     <asp:ListItem>Normal</asp:ListItem>
                 </asp:DropDownList>
@@ -60,29 +65,30 @@
                 <asp:Label ID="lblMealType" runat="server" Text="Meal Type"></asp:Label>
             </td>
             <td class="auto-style12">
-                <asp:DropDownList ID="ddlMealType" runat="server" >
+                <asp:DropDownList ID="ddlMealType" AutoPostBack = "true" Enabled = "true" runat="server" >
+                <asp:ListItem Text = "--Select Mealtype--" Value = ""></asp:ListItem>
                 </asp:DropDownList>
                 <br />
             </td>
         </tr>
         <tr>
             <td class="auto-style13">
-                <asp:Label ID="lblFromdate" runat="server" Text="From Date"></asp:Label>
+                <asp:Label ID="lblFromdate" runat="server" Text="From Date" ></asp:Label>
             </td>
             <td class="auto-style14">
-               <input id="FromDate" type="date" />
-                <br />
+               &nbsp;<br />
+                <asp:TextBox ID="txtFromDate" runat="server" TextMode="Date"></asp:TextBox>
             </td>
             <td class="auto-style15">
                 <asp:Label ID="lblToDate" runat="server" Text="To Date"></asp:Label>
             </td>
             <td class="auto-style16">
-                <input id="ToDate" type="date" />
                 <br />
+                <asp:TextBox ID="txtToDate" runat="server" TextMode="Date"></asp:TextBox>
             </td>
         </tr>
         <tr>
-            <td> <asp:Label ID="lblDeptId" runat="server" Text="Department Id"></asp:Label></td>
+            <td> <asp:Label ID="lblDeptId" runat="server" Text="Department Name"></asp:Label></td>
             <td> 
                 <br />
                 <asp:DropDownList ID="ddlDeptID" runat="server" >
@@ -94,7 +100,7 @@
     </table >
     <table class="nav-justified" id="table" >
         <tr>
-            <td><asp:Label ID="lblAddNote" runat="server" Text="Additional Notes"></asp:Label></td>
+            <td><asp:Label ID="txtAddDetails" runat="server" Text="Additional Notes"></asp:Label></td>
             <td colspan="3"> <textarea id="txtAddNotes" cols="90" rows="3"></textarea> </td>
         </tr>        
     </table>
@@ -272,7 +278,7 @@ table
                                <asp:Label ID="lblHrSlNo" runat="server"></asp:Label>
                            </td>
                            <td class="auto-style21">
-                               <asp:TextBox ID="txtEmpNmae" runat="server"></asp:TextBox>
+                               <asp:TextBox ID="txtEmpName" runat="server"></asp:TextBox>
                            </td>
                            <td class="auto-style22">
                                <asp:TextBox ID="txtDeptName" runat="server"></asp:TextBox>
@@ -338,8 +344,8 @@ table
             </tr>
             <tr>
                 <td class="auto-style18">&nbsp;&nbsp;<asp:TextBox ID="txtMailBody" runat="server" Height="51px" TextMode="MultiLine" Width="348px"></asp:TextBox>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="btnRequest" runat="server" Text="Request" OnClick="btnRequest_Click" />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<asp:Button ID="btnReqSubmit" runat="server" Text="Submit" OnClick="btnReqSubmit_Click" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="btnRequest" runat="server" Text="Request" OnClick="btnRequest_Click" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<asp:Button ID="btnReqSubmit" runat="server" Text="Submit" OnClick="btnReqSubmit_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <asp:Button ID="btnReqCancel" runat="server" Text="Cancel" />
                 </td>

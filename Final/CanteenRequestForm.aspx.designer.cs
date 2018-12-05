@@ -130,6 +130,15 @@ namespace Final {
         protected global::System.Web.UI.WebControls.Label lblFromdate;
         
         /// <summary>
+        /// txtFromDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFromDate;
+        
+        /// <summary>
         /// lblToDate control.
         /// </summary>
         /// <remarks>
@@ -137,6 +146,15 @@ namespace Final {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblToDate;
+        
+        /// <summary>
+        /// txtToDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtToDate;
         
         /// <summary>
         /// lblDeptId control.
@@ -157,13 +175,13 @@ namespace Final {
         protected global::System.Web.UI.WebControls.DropDownList ddlDeptID;
         
         /// <summary>
-        /// lblAddNote control.
+        /// txtAddDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAddNote;
+        protected global::System.Web.UI.WebControls.Label txtAddDetails;
         
         /// <summary>
         /// lblCount control.
@@ -274,13 +292,13 @@ namespace Final {
         protected global::System.Web.UI.WebControls.Label lblHrSlNo;
         
         /// <summary>
-        /// txtEmpNmae control.
+        /// txtEmpName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmpNmae;
+        protected global::System.Web.UI.WebControls.TextBox txtEmpName;
         
         /// <summary>
         /// txtDeptName control.

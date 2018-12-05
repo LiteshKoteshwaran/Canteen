@@ -14,19 +14,33 @@ namespace Final
         public string OrgName { get; set; }
         public string MobileNo { get; set; }
         public string Query { get; set; }
-        string Output;
+
+        public string EmpId { get; set; }
+        public string DepartID { get; set; }
+        public string LocId { get; set; }
+        public string CanteenID { get; set; }
+        public string FoodType { get; set; }
+        public string OrderQuanty { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public string AddDetails { get; set; }
+        public string Emp2 { get; set; }
+
         ConnectionManger connectionManger = new ConnectionManger();
         bool Result;
 
-        public bool InsertionForGuest()
+        internal bool InsertionForGuest(string RequestID, string Token)
         {
-            string RequestID = Guid.NewGuid().ToString().Substring(0, Guid.NewGuid().ToString().Length - 15);
-            string Token = Guid.NewGuid().ToString().Substring(0, Guid.NewGuid().ToString().Length - 15);
-            string str = "insert into Guest values('" + GName + "','" + OrgName + "','" + MobileNo + "','" + Token + "','" + RequestID + "')";
+            string str = "insert into Guest values('" + GName + "','" + OrgName + "','" + MobileNo + "','" + Token + "','" + RequestID + "')" ; 
             Result = connectionManger.ConnMan(str);
             return Result;
         }
+        internal void RequestForm(string RequestID, string Token)
+        {
+            string str = "insert into RequestForm values('" + RequestID + "','" + EmpId  + "','" + DepartID + "','" + LocId + "','" + CanteenID + "','" + FoodType + "','" + OrderQuanty + "','" + FromDate + "','" + ToDate + "','" + AddDetails + "')";
+             
+            Result = connectionManger.ConnMan(str);
+        }
 
-
-}
+    }
 }
