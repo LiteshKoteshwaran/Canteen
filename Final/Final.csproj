@@ -174,11 +174,13 @@
     <Content Include="Admin\BillApproval.aspx" />
     <Content Include="Admin\Canteen.aspx" />
     <Content Include="Admin\Department.aspx" />
+    <Content Include="Admin\DepartmentWiseMonthlyReport.aspx" />
     <Content Include="Admin\Email.aspx" />
     <Content Include="Admin\ItemsRates.aspx" />
     <Content Include="Admin\Location.aspx" />
+    <Content Include="Admin\MonthlyReport.aspx" />
     <Content Include="Admin\ReportDashboard.aspx" />
-    <Content Include="Admin\Role.aspx" />
+    <Content Include="Admin\Roles.aspx" />
     <Content Include="Admin\VIPRequestFrom.aspx" />
     <Content Include="CanteenRequestForm.aspx" />
     <Content Include="Contact.aspx" />
@@ -384,6 +386,13 @@
     <Compile Include="Admin\Department.aspx.designer.cs">
       <DependentUpon>Department.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\DepartmentWiseMonthlyReport.aspx.cs">
+      <DependentUpon>DepartmentWiseMonthlyReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\DepartmentWiseMonthlyReport.aspx.designer.cs">
+      <DependentUpon>DepartmentWiseMonthlyReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Email.aspx.cs">
       <DependentUpon>Email.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -405,6 +414,13 @@
     <Compile Include="Admin\Location.aspx.designer.cs">
       <DependentUpon>Location.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\MonthlyReport.aspx.cs">
+      <DependentUpon>MonthlyReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\MonthlyReport.aspx.designer.cs">
+      <DependentUpon>MonthlyReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\ReportDashboard.aspx.cs">
       <DependentUpon>ReportDashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -412,13 +428,15 @@
     <Compile Include="Admin\ReportDashboard.aspx.designer.cs">
       <DependentUpon>ReportDashboard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\Role.aspx.cs">
-      <DependentUpon>Role.aspx</DependentUpon>
+    <Compile Include="Admin\Roles.aspx.cs">
+      <DependentUpon>Roles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admin\Role.aspx.designer.cs">
-      <DependentUpon>Role.aspx</DependentUpon>
+    <Compile Include="Admin\Roles.aspx.designer.cs">
+      <DependentUpon>Roles.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\RolesDAL.cs" />
+    <Compile Include="Admin\SQLManager.cs" />
     <Compile Include="Admin\VIPRequestFrom.aspx.cs">
       <DependentUpon>VIPRequestFrom.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -319,6 +319,25 @@ namespace Final
         {
 
         }
+
+        protected void FromDateValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DateTime thisDay = DateTime.Today;
+            DateTime CmpDate =Convert.ToDateTime(FromDate.Value);
+            if(CmpDate<=thisDay)
+            {
+                args.IsValid = false;
+            }
+        }
+        protected void ToDateValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DateTime thisDay = DateTime.Today;
+            DateTime CmpDate = Convert.ToDateTime(FromDate.Value);
+            if (CmpDate <= thisDay)
+            {
+                args.IsValid = false;
+            }
+        }
     }
 }
 

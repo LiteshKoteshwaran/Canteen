@@ -70,14 +70,16 @@
                 <asp:Label ID="lblFromdate" runat="server" Text="From Date"></asp:Label>
             </td>
             <td class="auto-style14">
-               <input id="FromDate" type="date" />
-                <br />
+               <input type="date" ID="FromDate" name="FromDate" runat="server" />
+                <asp:CustomValidator ID="FromDateValidator" runat="server" ControlToValidate="FromDate" OnServerValidate="FromDateValidator_ServerValidate" ErrorMessage="FromDateNotValid"></asp:CustomValidator>
+                <br />               
             </td>
             <td class="auto-style15">
                 <asp:Label ID="lblToDate" runat="server" Text="To Date"></asp:Label>
             </td>
             <td class="auto-style16">
-                <input id="ToDate" type="date" />
+                <input id="ToDate" type="date" runat="server" />
+                <asp:CustomValidator ID="ToDateValidator" runat="server" ControlToValidate="ToDate" ErrorMessage="ToDateNotValid" OnServerValidate="ToDateValidator_ServerValidate"></asp:CustomValidator>
                 <br />
             </td>
         </tr>
