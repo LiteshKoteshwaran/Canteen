@@ -26,6 +26,9 @@
     </table>
     <br />
     <br />
+    <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="Accept" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="btnReject" runat="server" OnClick="btnReject_Click" Text="Reject" />
     <br />
     <br />
 </asp:Content>

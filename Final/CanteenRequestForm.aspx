@@ -13,6 +13,7 @@
             <td class="auto-style2">
                 <asp:TextBox ID="txtEmpId" runat="server"></asp:TextBox>
                 <br />
+                <asp:TextBox ID="txtEmpNo" runat="server"></asp:TextBox>
             </td>
             <td class="auto-style3">
                 <asp:Label ID="lblEmpName" runat="server" Text="Employee Name"></asp:Label>
@@ -22,6 +23,8 @@
                 <br />
                 <asp:DropDownList ID="ddlEmpName" runat="server" AutoPostBack = "true" OnSelectedIndexChanged="ddlEmpName_SelectedIndexChanged" >
                 </asp:DropDownList>
+                <br />
+                <asp:TextBox ID="txtEmpLoyee" runat="server"></asp:TextBox>
                 <br />
                 <br />
             </td>             

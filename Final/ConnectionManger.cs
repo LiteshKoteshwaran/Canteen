@@ -8,28 +8,14 @@ using System.Web;
 
 namespace Final
 {
-    public class ProcParameters
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
-        public DbType DataType { get; set; }
-        public ParameterDirection Direction { get; set; }
-
-        public ProcParameters(string Name, string Value, DbType DataType, ParameterDirection Direction)
-        {
-            this.Name = Name;
-            this.Value = Value;
-            this.DataType = DataType;
-            this.Direction = Direction;
-        }
-    }
     public class ConnectionManger
     {
-        static string OutputForProc;
         public static string ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         public string Query { get; set; }
+        public string ManagerEmail { get; set; }
+        public string EmpPassword { get; set; }
 
-        public bool ConnMan(string str)
+        internal bool ConnMan(string str)
         {
 
             bool isSuccess = true;
@@ -50,9 +36,7 @@ namespace Final
                 }
                 catch (Exception ex)
                 {
-                    //Write exception to log
                     isSuccess = false;
-                    //LogFilePath();
                 }
                 finally
                 {
@@ -62,6 +46,47 @@ namespace Final
             }
         }
         
+
+
+        internal void ForManagerEmail(string str)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(str))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        if (sdr.Read())
+                        {
+                            ManagerEmail = sdr["Email"].ToString();
+                            //Password = sdr["Password"].ToString();
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
+        internal void ForEmpEmail(string str)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(str))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        if (sdr.Read())
+                        {
+                            EmpPassword = sdr["EmpPassword"].ToString();
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
     }
     
 }

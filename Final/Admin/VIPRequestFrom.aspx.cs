@@ -11,7 +11,26 @@ namespace Final.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["RequestId"] != null)
+            {
+                //string RequestID = Session["RequestId"].ToString();
+                //Response.Write(RequestID);
+                //string Description = Session["Description"].ToString();
+                //Response.Write(Description);
 
+                txtRequestID.Text = Session["RequestId"].ToString();
+                txtDescription.Text= Session["Description"].ToString();
+            }
+        }
+
+        protected void btnAccept_Click(object sender, EventArgs e)
+        {
+            Session["Result"] = "Accepted";
+        }
+
+        protected void btnReject_Click(object sender, EventArgs e)
+        {
+            Session["Result"] = "Rejected";
         }
     }
 }

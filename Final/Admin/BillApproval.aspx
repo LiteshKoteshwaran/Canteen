@@ -48,7 +48,6 @@
             <td style="height: 61px; width: 215px">
                 <asp:DropDownList ID="DropDownListLocation" runat="server" DataSourceID="SqlDataSource1" DataTextField="LocationName" DataValueField="LocationName">
                 </asp:DropDownList>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT [LocationName] FROM [Location]"></asp:SqlDataSource>
             </td>
             <td class="modal-sm" style="width: 270px; height: 61px">
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -57,7 +56,6 @@
             <td style="height: 61px">
                 <asp:DropDownList ID="DropDownListCanteen" runat="server" DataSourceID="SqlDataSource2" DataTextField="CanteenName" DataValueField="CanteenName">
                 </asp:DropDownList>
-                <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT [CanteenName] FROM [Canteen]"></asp:SqlDataSource>
             </td>
         </tr>
         <tr>

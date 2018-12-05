@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -42,5 +43,21 @@ namespace Final
             Result = connectionManger.ConnMan(str);
         }
 
+
+        internal DataSet Fill(string QueryForAutoFillingLoc)
+        {
+            SqlConnection con = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = QueryForAutoFillingLoc;
+            DataSet objDs = new DataSet();
+            SqlDataAdapter dAdapter = new SqlDataAdapter();
+            dAdapter.SelectCommand = cmd;
+            con.Open();
+            dAdapter.Fill(objDs);
+            con.Close();
+            return objDs;
+        }
     }
 }
