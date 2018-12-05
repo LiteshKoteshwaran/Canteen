@@ -414,7 +414,6 @@
     </Compile>
     <Compile Include="Admin\Role.aspx.cs">
       <DependentUpon>Role.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\Role.aspx.designer.cs">
       <DependentUpon>Role.aspx</DependentUpon>

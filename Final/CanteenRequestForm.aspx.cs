@@ -310,6 +310,16 @@ namespace Final
             }
         }
 
+        protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DateTime thisDay = DateTime.Today;
+            DateTime CmpDate = Convert.ToDateTime(txtFromDate.Text);
+            if (CmpDate <= thisDay)
+            {
+                args.IsValid = false;
+            }
+        }
+
         protected void ddlCanteen_SelectedIndexChanged(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(ConnectionString);

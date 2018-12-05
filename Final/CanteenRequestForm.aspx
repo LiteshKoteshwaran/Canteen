@@ -81,6 +81,7 @@
             <td class="auto-style14">
                &nbsp;<br />
                 <asp:TextBox ID="txtFromDate" runat="server" TextMode="Date"></asp:TextBox>
+                <asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="CustomValidator" OnServerValidate="CustomValidator1_ServerValidate"></asp:CustomValidator>
             </td>
             <td class="auto-style15">
                 <asp:Label ID="lblToDate" runat="server" Text="To Date"></asp:Label>
