@@ -58,15 +58,15 @@ namespace Final.Admin
         {
             string QueryForNoOfRequest= "select count(*) as NoOfRequests from Request group by DATEPART(mm, FromDate),LocId,CanteenId having DATEPART(mm, FromDate) =" + ddlMonth.SelectedValue + " and LocId =" + ddlLocation.SelectedValue + " and CanteenId ="+ddlCanteen.SelectedValue;
             connectionManger = new ConnectionManger();
-            txtNoOfRequest.Text= connectionManger.Selection(QueryForNoOfRequest);
+            txtNoOfRequest.Text= connectionManger.Selection(QueryForNoOfRequest,"RequestId");
 
-            string QueryForNoOfConsumed = "select count(*) as NoOfConsumed from Request R full outer join Served S on R.RequestId = S.ReqId where S.IfServed = 1 group by DATEPART(mm, R.FromDate) ,LocId,CanteenId having DATEPART(mm, R.FromDate) = " + ddlMonth.SelectedValue  + " and LocId ="+ ddlLocation.SelectedValue + " and CanteenId =" + ddlCanteen.SelectedValue;
+            string QueryForNoOfConsumed = "select count(*) as NoOfConsumed from Request R full outer join ServedDetails S on R.RequestId = S.RequestId where S.IfServed = 1 group by DATEPART(mm, R.FromDate) ,LocId,CanteenId having DATEPART(mm, R.FromDate) = " + ddlMonth.SelectedValue  + " and LocId ="+ ddlLocation.SelectedValue + " and CanteenId =" + ddlCanteen.SelectedValue;
             connectionManger = new ConnectionManger();
-            txtNoOfRequest.Text = connectionManger.Selection(QueryForNoOfConsumed);
+            txtNoOfRequest.Text = connectionManger.Selection(QueryForNoOfConsumed,"RequestId");
 
-            string QueryForNoOfTotalCost = "select SUM(S.Cost) as TotalCost from Request R  full outer join Served S on R.RequestId = S.ReqId where S.IfServed = 1 group by DATEPART(mm, FromDate) ,LocId,CanteenId having DATEPART(mm, FromDate) =" + ddlMonth.SelectedValue + " and LocId ="+ ddlMonth.SelectedValue + " and CanteenId =" + ddlCanteen.SelectedValue;
+            string QueryForNoOfTotalCost = "select SUM(S.Cost) as TotalCost from Request R  full outer join ServedDetails S on R.RequestId = S.RequestId where S.IfServed = 1 group by DATEPART(mm, FromDate) ,LocId,CanteenId having DATEPART(mm, FromDate) =" + ddlMonth.SelectedValue + " and LocId ="+ ddlMonth.SelectedValue + " and CanteenId =" + ddlCanteen.SelectedValue;
             connectionManger = new ConnectionManger();
-            txtTotalCost.Text = connectionManger.Selection(QueryForNoOfConsumed);
+            txtTotalCost.Text = connectionManger.Selection(QueryForNoOfConsumed,"Cost");
         }
 
 

@@ -18,18 +18,18 @@
             </td>
             <td style="height: 70px">
                 <asp:DropDownList ID="ddlMonth" runat="server">
-                    <asp:ListItem>Jan</asp:ListItem>
-                    <asp:ListItem>Feb</asp:ListItem>
-                    <asp:ListItem>March</asp:ListItem>
-                    <asp:ListItem>April</asp:ListItem>
-                    <asp:ListItem>May</asp:ListItem>
-                    <asp:ListItem>June</asp:ListItem>
-                    <asp:ListItem>July</asp:ListItem>
-                    <asp:ListItem>August</asp:ListItem>
-                    <asp:ListItem>Sep</asp:ListItem>
-                    <asp:ListItem>Oct</asp:ListItem>
-                    <asp:ListItem>Nov</asp:ListItem>
-                    <asp:ListItem>Dec</asp:ListItem>
+                    <asp:ListItem Value="1">Jan</asp:ListItem>
+                    <asp:ListItem Value="2">Feb</asp:ListItem>
+                    <asp:ListItem Value="3">March</asp:ListItem>
+                    <asp:ListItem Value="4">April</asp:ListItem>
+                    <asp:ListItem Value="5">May</asp:ListItem>
+                    <asp:ListItem Value="6">June</asp:ListItem>
+                    <asp:ListItem Value="7">July</asp:ListItem>
+                    <asp:ListItem Value="8">August</asp:ListItem>
+                    <asp:ListItem Value="9">Sep</asp:ListItem>
+                    <asp:ListItem Value="10">Oct</asp:ListItem>
+                    <asp:ListItem Value="11">Nov</asp:ListItem>
+                    <asp:ListItem Value="12">Dec</asp:ListItem>
                 </asp:DropDownList>
             </td>
         </tr>

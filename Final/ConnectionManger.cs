@@ -61,7 +61,7 @@ namespace Final
                         if (sdr.Read())
                         {
                             //ManagerEmail
-                               Output = sdr["Cost"].ToString();
+                            Output = sdr["Cost"].ToString();
                             //Password = sdr["Password"].ToString();
                         }
                     }
@@ -130,12 +130,33 @@ namespace Final
                 con.Close();
                 return objDs;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               throw ex;
+                throw ex;
             }
         }
 
+        internal string Selection(string str, string str1)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(str))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        if (sdr.Read())
+                        {
+                            //ManagerEmail
+                            Output = sdr[str1].ToString();
+                            //Password = sdr["Password"].ToString();
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            return Output;
+        }
     }
-    
 }

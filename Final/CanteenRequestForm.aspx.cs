@@ -157,7 +157,7 @@ namespace Final
             forSqlOp.EmpId = txtEmpId.Text;
 
 
-
+            forSqlOp.OrderQuanty = ""+TotalCount;
             forSqlOp.FromDate = txtFromDate.Text;
             forSqlOp.ToDate = txtToDate.Text;
 
