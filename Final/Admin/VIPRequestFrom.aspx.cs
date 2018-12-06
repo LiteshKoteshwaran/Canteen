@@ -9,6 +9,7 @@ namespace Final.Admin
 {
     public partial class VIPRequestFrom : System.Web.UI.Page
     {
+        ConnectionManger connectionManger;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["RequestId"] != null)
@@ -30,8 +31,11 @@ namespace Final.Admin
 
         protected void btnReject_Click(object sender, EventArgs e)
         {
+            connectionManger = new ConnectionManger();
             Session["Result"] = "Rejected";
             Session["AdminReflex"] = txtRequestID.Text;
+            string str = "update Request set AdminVIPApproval = 0 where RequestId = '" + txtRequestID.Text + "'";
+            connectionManger.ConnMan(str);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Final
         static string AlertFailureMessage = "Try again some other time!!!";
         static string link= "      http://localhost:63020/Admin/VIPRequestFrom ";
         string RequestID;
-        public static int TotalCount = 0;
+        public static int TotalCount = 1;
         static string AdminReflex;
         protected void Page_Load(object sender, EventArgs e)
         {
