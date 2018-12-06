@@ -39,14 +39,13 @@ namespace Final
         int Cost;
 
 
-
         ConnectionManger connectionManger = new ConnectionManger();
         bool Result ;
 
         void calculate()
         {
-            string str = "select Cost from Item where ItemName ="+ FoodType;
-            Cost = int.Parse(connectionManger.Selection(str));
+            string str = "select Cost from Item where ItemName ='"+ FoodType+"'";
+            Cost = int.Parse(connectionManger.Select(str));
             int Totalcost = CanteenRequestForm.TotalCount * Cost; 
         }
         internal bool InsertionForGuest()
@@ -60,10 +59,11 @@ namespace Final
         {
             string str = "insert into Request(RequestId,EmpId,DeptId,LocId,CanteenId,MealType,Quantity,FromDate,ToDate,AdditionDetails,Cost) values('" + RequestID + "','" + EmpId  + "','" + DepartID + "','" + LocId + "','" + CanteenID + "','" + FoodType + "','" + OrderQuanty + "','" + FromDate + "','" + ToDate + "','" + AddDetails + "','" + Cost + "')";
             return Result = connectionManger.ConnMan(str);
+            
         }
-        internal bool AdminIsApproved()
+        internal bool AdminIsApproved(string RequestID)
         {
-            string str = "update Request set AdminIsApproved = false where RequestId = '"+RequestID +"'";
+            string str = "update Request set AdminIsApproved = 0 where RequestId = '"+ RequestID + "'";
             return Result = connectionManger.ConnMan(str);
         }
     }

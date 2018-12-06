@@ -28,7 +28,7 @@ namespace Final
         static string link= "      http://localhost:63020/Admin/VIPRequestFrom ";
         string RequestID;
         public static int TotalCount = 0;
-
+        static string AdminReflex;
         protected void Page_Load(object sender, EventArgs e)
         {
             DataTable dt;
@@ -62,7 +62,7 @@ namespace Final
             if (Session["Result"] == "Rejected")
             {
                 forSqlOp = new ForSqlOp();
-                forSqlOp.AdminIsApproved();
+                forSqlOp.AdminIsApproved((Session["AdminReflex"]).ToString());
                 Response.Write("<script>alert('" + "Admin Has Rejected your request" + "');</script>");
             }
         }
@@ -130,11 +130,12 @@ namespace Final
             }
             catch(Exception ex)
             {
-
+                
                 Response.Write("<script>alert('" + (AlertFailureMessage) + "');</script>");
             }
             AssignValues();
             Session["RequestId"] = RequestID;
+            AdminReflex = RequestID;
             Session["Description"] = Context.User.Identity.GetUserName()+ " have ordered for Vip Canteen ";
         }
 
@@ -165,7 +166,7 @@ namespace Final
             forSqlOp.LocId = ddlLocation.SelectedValue;
             forSqlOp.CanteenID = ddlCanteen.SelectedValue;
             forSqlOp.AddDetails = txtAddDetails.Text;
-            forSqlOp.FoodType = ddlMealType.SelectedValue;
+            forSqlOp.FoodType = ddlMealType.SelectedItem.Text;
             forSqlOp.RequestID = Guid.NewGuid().ToString().Substring(0, Guid.NewGuid().ToString().Length - 25);
             RequestID = forSqlOp.RequestID;
             forSqlOp.TokenID = Guid.NewGuid().ToString().Substring(0, Guid.NewGuid().ToString().Length - 25);

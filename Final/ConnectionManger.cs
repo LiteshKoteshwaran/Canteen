@@ -48,6 +48,28 @@ namespace Final
                 return isSuccess;
             }
         }
+        internal string Select(string str)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(str))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        if (sdr.Read())
+                        {
+                            //ManagerEmail
+                               Output = sdr["Cost"].ToString();
+                            //Password = sdr["Password"].ToString();
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            return Output;
+        }
         internal string Selection(string str)
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
@@ -61,7 +83,7 @@ namespace Final
                         if (sdr.Read())
                         {
                             //ManagerEmail
-                               Output = sdr["Email"].ToString();
+                            Output = sdr["Email"].ToString();
                             //Password = sdr["Password"].ToString();
                         }
                     }

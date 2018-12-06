@@ -31,6 +31,7 @@ namespace Final.Admin
         protected void btnReject_Click(object sender, EventArgs e)
         {
             Session["Result"] = "Rejected";
+            Session["AdminReflex"] = txtRequestID.Text;
         }
     }
 }
