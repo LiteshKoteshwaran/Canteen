@@ -81,7 +81,7 @@
             <td class="auto-style14">
                &nbsp;<br />
                 <asp:TextBox ID="txtFromDate" runat="server" TextMode="Date"></asp:TextBox>
-                <asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="CustomValidator" OnServerValidate="CustomValidator1_ServerValidate"></asp:CustomValidator>
+                <asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="from date not valid" ="from date not valid" OnServerValidate="CustomValidator1_ServerValidate" ControlToValidate="txtFromDate"></asp:CustomValidator>
             </td>
             <td class="auto-style15">
                 <asp:Label ID="lblToDate" runat="server" Text="To Date"></asp:Label>
@@ -89,6 +89,7 @@
             <td class="auto-style16">
                 <br />
                 <asp:TextBox ID="txtToDate" runat="server" TextMode="Date"></asp:TextBox>
+                <asp:CustomValidator ID="CustomValidator2" runat="server" ControlToValidate="txtToDate" ErrorMessage="CustomValidator" OnServerValidate="CustomValidator2_ServerValidate"></asp:CustomValidator>
             </td>
         </tr>
         <tr>
@@ -334,6 +335,9 @@ table
                    </table>
                    <br />
                    <br />
+                   <asp:GridView ID="GridView1" runat="server" Height="114px" Width="729px">
+                   </asp:GridView>
+                   <asp:Button ID="btnView" runat="server" OnClick="btnView_Click" Text="Add" />
                    <br />
                    <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -25,24 +25,29 @@ namespace Final
         SqlConnection con = new SqlConnection(ConnectionString);
         static string AlertSuccesMessage = "Request has been made";
         static string AlertFailureMessage = "Try again some other time!!!";
-        static string link= " http://localhost:63020/Admin/VIPRequestFrom ";
+        static string link= "      http://localhost:63020/Admin/VIPRequestFrom ";
         string RequestID;
+        static int TotalCount = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            DataTable dt;
             if (!this.IsPostBack)
             {
                 AutoFillForDepart();
                 AutoFillLoc();
                 AutoFillEmpName();
                 txtEmpLoyee.Text = Context.User.Identity.GetUserName();
-                //DataTable dt = new DataTable();
-                //dt.Columns.AddRange(new DataColumn[4] { new DataColumn("S.No"), new DataColumn("GuestName"), new DataColumn("Name"), new DataColumn("MobileNo") });
-                //ViewState["Guest"] = dt;
+                dt = new DataTable();
+                dt.Columns.AddRange(new DataColumn[5] { new DataColumn("S.No"), new DataColumn("GuestName"), new DataColumn("Name"), new DataColumn("MobileNo"), new DataColumn("Token No") });
+                ViewState["Guest"] = dt;
                 this.BindGrid();
             }
             if (Context.User.IsInRole("HR"))
             {
+                dt = new DataTable();
+                dt.Columns.AddRange(new DataColumn[5] { new DataColumn("SlNo"), new DataColumn("EmpName"), new DataColumn("DeptName"), new DataColumn("Mobile"), new DataColumn("TokenNo") });
+                dt.Columns.AddRange(new DataColumn[3] {  new DataColumn("Item"), new DataColumn("Qunatity"), new DataColumn("MobileNo") });
                 TableForHr.Visible = true;
                 TableForSnacks.Visible = true;
                 AutoFillIteam();
@@ -64,19 +69,38 @@ namespace Final
 
         protected void BindGrid()
         {
+            GridView1.DataSource = (DataTable)ViewState["Guest"];
+            GridView1.DataBind();
         }
 
-        //void Insert()
-        //{
-        //    DataTable dt = (DataTable)ViewState["Guest"];
-        //    dt.Rows.Add(CountOfGuest, txtGuestName.Text.Trim(), txtOrgName.Text.Trim(), txtMobileNo.Text.Trim());
-        //    ViewState["Guest"] = dt;
-        //    this.BindGrid();int i = 1;
-        //    lblCount.Text = (CountOfGuest+i++).ToString();
-        //    txtGuestName.Text = string.Empty;
-        //    txtOrgName.Text = string.Empty;
-        //    txtMobileNo.Text = string.Empty;
-        //}
+        void Insert()
+        {
+            
+            DataTable dt = (DataTable)ViewState["Guest"];
+            dt.Rows.Add(TotalCount, txtGuestName.Text.Trim(), txtOrgName.Text.Trim(), txtMobileNo.Text.Trim());
+            ViewState["Guest"] = dt;
+            this.BindGrid();
+            if (txtGuestName.Text != null)
+            {
+                lblCount.Text = (TotalCount).ToString();
+                txtGuestName.Text = txtGuestName.Text;
+                txtOrgName.Text = txtOrgName.Text;
+                txtMobileNo.Text = txtMobileNo.Text;
+            }
+            if(txtEmpName.Text != null)
+            {
+                txtGuestName.Text = txtEmpName.Text;
+                txtOrgName.Text = txtDeptName.Text;
+                txtMobileNo.Text = txtMobile.Text;
+            }
+            if (ddlItemName.SelectedValue != null)
+            {
+                txtGuestName.Text = ddlItemName.SelectedValue;
+                txtOrgName.Text = txtQuantity.Text;
+                txtMobileNo.Text = txtTimetoServe.Text;
+            }
+            TotalCount++;
+        }
         protected void btnRequest_Click(object sender, EventArgs e)
         {
             string SubjectForVipRequest = "Vip Food Request";
@@ -101,6 +125,7 @@ namespace Final
                 else
                 {
                     mail.SendToManager(ManagerEmail, SubjectForFoodRequest, EmailBody, Sender, EmpPassword);
+                    Response.Write("<script>alert('" + " Info sent to your Respective Department Manager " + "');</script>");
                 }
             }
             catch(Exception ex)
@@ -120,18 +145,25 @@ namespace Final
             forSqlOp.GName = txtGuestName.Text;
             forSqlOp.OrgName = txtOrgName.Text;
             forSqlOp.MobileNo = txtMobileNo.Text;
+
             forSqlOp.Emp2 = txtEmpName.Text;
+            forSqlOp.EmpDeptName = txtDeptName.Text;
+            forSqlOp.EmpMobile = txtMobile.Text;
+
+            forSqlOp.SelectedSnacks = ddlItemName.SelectedValue;
+            forSqlOp.SnackQuantity = txtQuantity.Text;
+
             forSqlOp.EmpId = txtEmpId.Text;
-            forSqlOp.DepartID = ddlDeptID.SelectedItem.Text;
-            forSqlOp.LocId = ddlLocation.SelectedValue;
-            forSqlOp.CanteenID = ddlCanteen.SelectedValue;
+
 
 
             forSqlOp.FromDate = txtFromDate.Text;
             forSqlOp.ToDate = txtToDate.Text;
 
 
-
+            forSqlOp.DepartID = ddlDeptID.SelectedItem.Text;
+            forSqlOp.LocId = ddlLocation.SelectedValue;
+            forSqlOp.CanteenID = ddlCanteen.SelectedValue;
             forSqlOp.AddDetails = txtAddDetails.Text;
             forSqlOp.FoodType = ddlMealType.SelectedValue;
             forSqlOp.RequestID = Guid.NewGuid().ToString().Substring(0, Guid.NewGuid().ToString().Length - 25);
@@ -139,6 +171,7 @@ namespace Final
             forSqlOp.TokenID = Guid.NewGuid().ToString().Substring(0, Guid.NewGuid().ToString().Length - 25);
             forSqlOp.RequestForm();
             forSqlOp.InsertionForGuest();
+
         }
 
 
@@ -152,7 +185,7 @@ namespace Final
         void FetchManagerEmail()
         {
             connectionManger = new ConnectionManger();
-            string QueryForManagerEmail = "select Manager.Email, Manager.Password from Manager join Department on Department.ID = Manager.DepartmentID where DepartmentID =('" + ddlDeptID.SelectedItem + "')";
+            string QueryForManagerEmail = "select Manager.Email, Manager.Password from Manager join Department on Department.DeptId = Manager.DepartmentId where DeptId =('" + ddlDeptID.SelectedItem + "')";
             connectionManger.ForManagerEmail(QueryForManagerEmail);
             ManagerEmail = connectionManger.ManagerEmail;
         }
@@ -195,13 +228,13 @@ namespace Final
         private void AutoFillLoc()
         {
             connectionManger = new ConnectionManger();
-            string QueryForAutoFillingLoc = "SELECT LocationID, LocationName FROM Location";
+            string QueryForAutoFillingLoc = "SELECT LocationId, LocationName FROM Location";
             DataSet dataSet = connectionManger.Fill(QueryForAutoFillingLoc);
             if (dataSet.Tables[0].Rows.Count > 0)
             {
                 ddlLocation.DataSource = dataSet.Tables[0];
                 ddlLocation.DataTextField = "LocationName";
-                ddlLocation.DataValueField = "LocationID";
+                ddlLocation.DataValueField = "LocationId";
                 ddlLocation.DataBind();
                 ddlLocation.Items.Insert(0, "--Select--");
             }
@@ -210,13 +243,13 @@ namespace Final
         void AutoFillIteam()
         {
             connectionManger = new ConnectionManger();
-            string QueryForAutoFillingItem = "SELECT ItemID, ItemName FROM Item where ItemName = 'Snacks'";
+            string QueryForAutoFillingItem = "SELECT ItemId, ItemName FROM Item where ItemName = 'Snacks'";
             DataSet dataSet = connectionManger.Fill(QueryForAutoFillingItem);
             if (dataSet.Tables[0].Rows.Count > 0)
             {
                 ddlItemName.DataSource = dataSet.Tables[0];
                 ddlItemName.DataTextField = "ItemName";
-                ddlItemName.DataValueField = "ItemID";
+                ddlItemName.DataValueField = "ItemId";
                 ddlItemName.DataBind();
                 ddlItemName.Items.Insert(0, "--Select--");
             }
@@ -224,13 +257,13 @@ namespace Final
         void AutoFillForDepart()
         {
             connectionManger = new ConnectionManger();
-            String QueryForAutoFillingDepartment = "select Name, Id from Department";
+            String QueryForAutoFillingDepartment = "select DeptName, DeptId from Department";
             DataSet dataSet = connectionManger.Fill(QueryForAutoFillingDepartment);
             if (dataSet.Tables[0].Rows.Count > 0)
             {
                 ddlDeptID.DataSource = dataSet.Tables[0];
-                ddlDeptID.DataTextField = "Id";
-                ddlDeptID.DataValueField = "Name";
+                ddlDeptID.DataTextField = "DeptId";
+                ddlDeptID.DataValueField = "DeptName";
                 ddlDeptID.DataBind();
                 ddlDeptID.Items.Insert(0, "--Select--");
             }
@@ -247,13 +280,13 @@ namespace Final
         protected void ddlLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
             connectionManger = new ConnectionManger();
-            string QueryForCascading = "SELECT CanteenID, CanteenName FROM Canteen WHERE LocationId ="+ ddlLocation.SelectedValue;
+            string QueryForCascading = "SELECT CanteenId, CanteenName FROM Canteen WHERE LocationId ="+ ddlLocation.SelectedValue;
             DataSet dataSet = connectionManger.Fill(QueryForCascading);
             if (dataSet.Tables[0].Rows.Count > 0)
             {
                 ddlCanteen.DataSource = dataSet.Tables[0];
                 ddlCanteen.DataTextField = "CanteenName";
-                ddlCanteen.DataValueField = "CanteenID";
+                ddlCanteen.DataValueField = "CanteenId";
                 ddlCanteen.DataBind();
                 ddlCanteen.Items.Insert(0, "--Select--");
             }
@@ -262,13 +295,13 @@ namespace Final
         protected void ddlCanteen_SelectedIndexChanged(object sender, EventArgs e)
         {
             connectionManger = new ConnectionManger();
-            string QueryForCascading = "SELECT Item.ItemID, Item.ItemName from Item join CanteenItem on Item.ItemID = CanteenItem.ItemID join Canteen on Canteen.CanteenID = CanteenItem.CanteenID where Canteen.CanteenID="+ ddlCanteen.SelectedValue;
+            string QueryForCascading = "SELECT Item.ItemId, Item.ItemName from Item join CanteenItems on Item.ItemId = CanteenItems.ItemId join Canteen on Canteen.CanteenId = CanteenItems.CanteenId where Canteen.CanteenId="+ ddlCanteen.SelectedValue;
             DataSet dataSet = connectionManger.Fill(QueryForCascading);
             if (dataSet.Tables[0].Rows.Count > 0)
             {
                 ddlMealType.DataSource = dataSet.Tables[0];
                 ddlMealType.DataTextField = "ItemName";
-                ddlMealType.DataValueField = "ItemID";
+                ddlMealType.DataValueField = "ItemId";
                 ddlMealType.DataBind();
                 ddlMealType.Items.Insert(0, "--Select--");
             }
@@ -281,9 +314,38 @@ namespace Final
             if (CmpDate <= thisDay)
             {
                 args.IsValid = false;
+                Response.Write("<script>alert('" + "Selected date is invaild " + "');</script>");
+            }
+            if (txtFromDate.Text!=null)
+            {
+                string message = "Selected date is invaild .";
+                string script = "window.onload = function(){ alert('";
+                script += message;
+                script += "');";
+                script += "window.location = '";
+                script += Request.Url.AbsoluteUri;
+                script += "'; }";
+                ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
             }
         }
+        protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DateTime thisDay = DateTime.Today;
+            DateTime CmpDate = Convert.ToDateTime(txtFromDate.Text);
+            if (CmpDate <= thisDay)
+            {
+                args.IsValid = false;
+                Response.Write("<script>alert('" + " Selected date is invaild" + "');</script>");
+            }
+        }
+        
 
+
+
+        protected void btnView_Click(object sender, EventArgs e)
+        {
+            Insert();
+        }
     }
 }
 
