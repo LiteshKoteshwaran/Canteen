@@ -9,23 +9,15 @@
     <table id="BillForm" class="nav-justified">
         <tr>
             <td style="height: 70px; width: 213px">
-                <asp:Label ID="lblYear" runat="server" Text="Year"></asp:Label>
-            </td>
+                &nbsp;</td>
             <td style="height: 70px; width: 215px">
-                <asp:DropDownList ID="DropDownListYear" runat="server" ItemType="Year">
-                    <asp:ListItem>2014</asp:ListItem>
-                    <asp:ListItem>2015</asp:ListItem>
-                    <asp:ListItem>2016</asp:ListItem>
-                    <asp:ListItem>2017</asp:ListItem>
-                    <asp:ListItem>2018</asp:ListItem>
-                </asp:DropDownList>
-            </td>
+                &nbsp;</td>
             <td class="modal-sm" style="width: 270px; height: 70px">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Label ID="lblMonth" runat="server" Text="Month"></asp:Label>
             </td>
             <td style="height: 70px">
-                <asp:DropDownList ID="DropDownListMonth" runat="server">
+                <asp:DropDownList ID="ddlMonth" runat="server">
                     <asp:ListItem>Jan</asp:ListItem>
                     <asp:ListItem>Feb</asp:ListItem>
                     <asp:ListItem>March</asp:ListItem>
@@ -46,7 +38,8 @@
                 <asp:Label ID="lblLocation" runat="server" Text="Location"></asp:Label>
             </td>
             <td style="height: 61px; width: 215px">
-                <asp:DropDownList ID="DropDownListLocation" runat="server" DataSourceID="SqlDataSource1" DataTextField="LocationName" DataValueField="LocationName">
+                <asp:DropDownList ID="ddlLocation" runat="server" AutoPostBack = "true" OnSelectedIndexChanged="ddlLocation_SelectedIndexChanged1">
+                <asp:ListItem Text = "--Select Location--" Value = ""></asp:ListItem>
                 </asp:DropDownList>
             </td>
             <td class="modal-sm" style="width: 270px; height: 61px">
@@ -54,7 +47,8 @@
                 <asp:Label ID="lblCanteen" runat="server" Text="Canteen"></asp:Label>
             </td>
             <td style="height: 61px">
-                <asp:DropDownList ID="DropDownListCanteen" runat="server" DataSourceID="SqlDataSource2" DataTextField="CanteenName" DataValueField="CanteenName">
+                <asp:DropDownList ID="ddlCanteen" runat="server" AutoPostBack = "true" OnSelectedIndexChanged="DropDownListCanteen_SelectedIndexChanged">
+                    <asp:ListItem Text = "--Select Canteen--" Value = ""></asp:ListItem>
                 </asp:DropDownList>
             </td>
         </tr>

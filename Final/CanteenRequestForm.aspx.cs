@@ -27,7 +27,7 @@ namespace Final
         static string AlertFailureMessage = "Try again some other time!!!";
         static string link= "      http://localhost:63020/Admin/VIPRequestFrom ";
         string RequestID;
-        static int TotalCount = 0;
+        public static int TotalCount = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -57,7 +57,7 @@ namespace Final
                 TableForHr.Visible = false;
                 TableForSnacks.Visible = false;
             }
-            if(Session["Result"]== "Accepted")
+            if(Session["Result"] == "Accepted")
                 Response.Write("<script>alert('" + "Admin Has Accepted your request" + "');</script>");
             if (Session["Result"] == "Rejected")
             {
@@ -186,8 +186,9 @@ namespace Final
         {
             connectionManger = new ConnectionManger();
             string QueryForManagerEmail = "select Manager.Email, Manager.Password from Manager join Department on Department.DeptId = Manager.DepartmentId where DeptId =('" + ddlDeptID.SelectedItem + "')";
-            connectionManger.ForManagerEmail(QueryForManagerEmail);
-            ManagerEmail = connectionManger.ManagerEmail;
+            //connectionManger.ForManagerEmail(QueryForManagerEmail);
+            //ManagerEmail = connectionManger.ManagerEmail;
+            ManagerEmail = connectionManger.Selection(QueryForManagerEmail);
         }
         void FetchEmpEmail()
         {
@@ -314,18 +315,6 @@ namespace Final
             if (CmpDate <= thisDay)
             {
                 args.IsValid = false;
-                Response.Write("<script>alert('" + "Selected date is invaild " + "');</script>");
-            }
-            if (txtFromDate.Text!=null)
-            {
-                string message = "Selected date is invaild .";
-                string script = "window.onload = function(){ alert('";
-                script += message;
-                script += "');";
-                script += "window.location = '";
-                script += Request.Url.AbsoluteUri;
-                script += "'; }";
-                ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
             }
         }
         protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
@@ -335,7 +324,6 @@ namespace Final
             if (CmpDate <= thisDay)
             {
                 args.IsValid = false;
-                Response.Write("<script>alert('" + " Selected date is invaild" + "');</script>");
             }
         }
         

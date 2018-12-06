@@ -22,24 +22,6 @@ namespace Final.Admin {
         protected global::System.Web.UI.WebControls.Button btnViewBill;
         
         /// <summary>
-        /// lblYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblYear;
-        
-        /// <summary>
-        /// DropDownListYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListYear;
-        
-        /// <summary>
         /// lblMonth control.
         /// </summary>
         /// <remarks>
@@ -49,13 +31,13 @@ namespace Final.Admin {
         protected global::System.Web.UI.WebControls.Label lblMonth;
         
         /// <summary>
-        /// DropDownListMonth control.
+        /// ddlMonth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListMonth;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMonth;
         
         /// <summary>
         /// lblLocation control.
@@ -67,13 +49,13 @@ namespace Final.Admin {
         protected global::System.Web.UI.WebControls.Label lblLocation;
         
         /// <summary>
-        /// DropDownListLocation control.
+        /// ddlLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListLocation;
+        protected global::System.Web.UI.WebControls.DropDownList ddlLocation;
         
         /// <summary>
         /// lblCanteen control.
@@ -85,13 +67,13 @@ namespace Final.Admin {
         protected global::System.Web.UI.WebControls.Label lblCanteen;
         
         /// <summary>
-        /// DropDownListCanteen control.
+        /// ddlCanteen control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListCanteen;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCanteen;
         
         /// <summary>
         /// lblNoOfRequest control.

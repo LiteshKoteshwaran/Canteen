@@ -15,7 +15,7 @@ namespace Final
         public string ManagerEmail { get; set; }
         public string EmpPassword { get; set; }
 
-
+        string Output;
 
 
         internal bool ConnMan(string str)
@@ -48,7 +48,7 @@ namespace Final
                 return isSuccess;
             }
         }
-        internal void ForManagerEmail(string str)
+        internal string Selection(string str)
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -60,13 +60,15 @@ namespace Final
                     {
                         if (sdr.Read())
                         {
-                            ManagerEmail = sdr["Email"].ToString();
+                            //ManagerEmail
+                               Output = sdr["Email"].ToString();
                             //Password = sdr["Password"].ToString();
                         }
                     }
                     con.Close();
                 }
             }
+            return Output;
         }
         internal void ForEmpEmail(string str)
         {
@@ -86,6 +88,7 @@ namespace Final
                     con.Close();
                 }
             }
+            //return Output;
         }
 
         internal DataSet Fill(string QueryForAutoFilling)

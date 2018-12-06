@@ -36,22 +36,29 @@ namespace Final
 
         public string SelectedSnacks { get; set; }
         public string SnackQuantity { get; set; }
-
+        int Cost;
 
 
 
         ConnectionManger connectionManger = new ConnectionManger();
         bool Result ;
 
+        void calculate()
+        {
+            string str = "select Cost from Item where ItemName ="+ FoodType;
+            Cost = int.Parse(connectionManger.Selection(str));
+            int Totalcost = CanteenRequestForm.TotalCount * Cost; 
+        }
         internal bool InsertionForGuest()
         {
+            calculate();
             string str = "insert into GuestDetails values('" + GName + "','" + OrgName + "','" + MobileNo + "','" + TokenID + "','" + RequestID + "')" ; 
             Result = connectionManger.ConnMan(str);
             return Result;
         }
         internal bool RequestForm()
         {
-            string str = "insert into Request values('" + RequestID + "','" + EmpId  + "','" + DepartID + "','" + LocId + "','" + CanteenID + "','" + FoodType + "','" + OrderQuanty + "','" + FromDate + "','" + ToDate + "','" + AddDetails + "')";
+            string str = "insert into Request(RequestId,EmpId,DeptId,LocId,CanteenId,MealType,Quantity,FromDate,ToDate,AdditionDetails,Cost) values('" + RequestID + "','" + EmpId  + "','" + DepartID + "','" + LocId + "','" + CanteenID + "','" + FoodType + "','" + OrderQuanty + "','" + FromDate + "','" + ToDate + "','" + AddDetails + "','" + Cost + "')";
             return Result = connectionManger.ConnMan(str);
         }
         internal bool AdminIsApproved()
